@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include "requests.h"
 
 int main() {
 	// Create client socket that will later be used to connect to the server.
@@ -28,12 +29,18 @@ int main() {
 	}
 
 	// Send a message over the connection and read back the response
-	char* message = "hello from the client";
-	send(client_fd, message, strlen(message), 0);
-	printf("Hello message sent\n");
-	char buffer[1024] = {0};
-	ssize_t valread = read(client_fd, buffer, 1024-1);
-	printf("%s\n", buffer);
+	const char* path = "/";
+	const char* host = "localhost:1234";
+	int result = send_get_request(client_fd, path, host);
+
+	if (result < 0) {
+		fprintf(stderr, "Failed to send GET request\n");
+	} else {
+		printf("Request sent succesffully\n");
+		char buffer[1024] = {0};
+		ssize_t valread = read(client_fd, buffer, 1024-1);
+		printf("%s\n", buffer);
+	}
 
 	// Close the connection
 	close(client_fd);

@@ -14,12 +14,6 @@ void add_route(route* available_routes, int* route_count, const char* path, cons
 
 const route* match_route(const route* available_routes, const int* route_count, const char* path, const char* method) {
 	for (int i = 0; i < *route_count; i++) {
-		printf("route path: %s\n", available_routes[i].path);
-		printf("input path: %s\n", path);
-		printf("route path: %s\n", available_routes[i].method);
-		printf("input path: %s\n", method);
-		printf("comparison: %b\n", strcmp(available_routes[i].path, path));
-		printf("comparison: %b\n", strcmp(available_routes[i].method, method));
 		if (strcmp(available_routes[i].path, path) == 0 && strcmp(available_routes[i].method, method) == 0) {
 			return &available_routes[i];
 		}
