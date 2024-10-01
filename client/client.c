@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "requests.h"
+#include "utils.h"
 
 int main() {
 	// Create client socket that will later be used to connect to the server.
@@ -29,8 +30,8 @@ int main() {
 	}
 
 	// Send a message over the connection and read back the response
-	const char* path = "/";
 	const char* host = "localhost:1234";
+	char* path = get_path();
 	int result = send_get_request(client_fd, path, host);
 
 	if (result < 0) {
